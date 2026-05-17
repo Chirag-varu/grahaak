@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { products as initialProducts, categories, brands } from "@/data/products";
 import { Product } from "@/types/product";
@@ -22,7 +22,7 @@ const categoryIcons: Record<string, any> = {
   "Sockets": Zap,
 };
 
-export default function Home() {
+function HomeContent() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
   
@@ -164,31 +164,34 @@ export default function Home() {
                     <Building2 className="h-4 w-4" />
                     <span>Brands</span>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    <Badge
-                      variant={selectedBrand === null ? "default" : "outline"}
-                      className={cn(
-                        "cursor-pointer px-5 py-2.5 text-xs rounded-full transition-all border-none font-bold tracking-tight",
-                        selectedBrand === null ? "shadow-lg shadow-slate-200" : "hover:bg-slate-50"
-                      )}
+                  <div className="flex flex-wrap gap-3">
+                    <button
                       onClick={() => setSelectedBrand(null)}
+                      className={cn(
+                        "group flex items-center gap-3 px-6 py-4 rounded-[1.5rem] transition-all duration-300 font-bold",
+                        selectedBrand === null 
+                          ? "bg-slate-900 text-white shadow-xl shadow-slate-400/20 scale-105" 
+                          : "bg-slate-50 text-slate-500 hover:bg-slate-100"
+                      )}
                     >
-                      Everyone
-                    </Badge>
+                      <Building2 className="h-5 w-5" />
+                      <span>All Brands</span>
+                    </button>
                     {brands.filter(Boolean).map((brand) => {
                       const isActive = selectedBrand === brand;
                       return (
-                        <Badge
+                        <button
                           key={brand}
-                          variant={isActive ? "default" : "outline"}
-                          className={cn(
-                            "cursor-pointer px-5 py-2.5 text-xs rounded-full transition-all border-none font-bold tracking-tight",
-                            isActive ? "bg-indigo-600 shadow-lg shadow-indigo-100" : "hover:bg-slate-50"
-                          )}
                           onClick={() => setSelectedBrand(brand)}
+                          className={cn(
+                            "group flex items-center gap-3 px-6 py-4 rounded-[1.5rem] transition-all duration-300 font-bold border border-transparent",
+                            isActive 
+                              ? "bg-indigo-600 text-white shadow-xl shadow-indigo-200 scale-105" 
+                              : "bg-white border-slate-100 text-slate-600 shadow-sm hover:border-indigo-200 hover:text-indigo-600"
+                          )}
                         >
-                          {brand}
-                        </Badge>
+                          <span>{brand}</span>
+                        </button>
                       );
                     })}
                   </div>
@@ -252,5 +255,13 @@ export default function Home() {
         </div>
       </footer>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#fcfdfe] flex items-center justify-center pt-24"><div className="h-14 w-14 rounded-[1.5rem] bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center animate-pulse"><span className="text-white font-black text-3xl">G</span></div></div>}>
+      <HomeContent />
+    </Suspense>
   );
 }
