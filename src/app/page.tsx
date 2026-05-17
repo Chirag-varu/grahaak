@@ -9,7 +9,7 @@ import { ProductGrid } from "@/components/product/ProductGrid";
 import { useProductSearch } from "@/hooks/useProductSearch";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { LayoutGrid, Building2, Filter, Sparkles, X, ChevronRight, Zap, Lightbulb, Wind, ShieldCheck, Cable } from "lucide-react";
+import { LayoutGrid, Building2, Filter, Sparkles, X, ChevronRight, Zap, Lightbulb, Wind, ShieldCheck, Cable, Github, Linkedin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -25,7 +25,7 @@ const categoryIcons: Record<string, any> = {
 function HomeContent() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
-  
+
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const { query, setQuery, results } = useProductSearch(products);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -59,38 +59,38 @@ function HomeContent() {
     <main className="min-h-screen bg-[#fcfdfe] flex flex-col pt-24">
       <Header onSearch={setQuery} />
 
-      <div className="container mx-auto px-4 md:px-12 py-12 flex-1">
-        <div className="flex flex-col gap-16">
+      <div className="container mx-auto px-4 md:px-12 py-8 md:py-12 flex-1">
+        <div className="flex flex-col gap-10 md:gap-16">
           {/* Hero Section */}
-          <motion.section 
+          <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center space-y-8 py-16"
           >
             <div className="inline-flex items-center gap-3 bg-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-200/50 border border-slate-50 text-blue-600">
               <Sparkles className="h-4 w-4" />
-              <span>Premium Electrical Catalog</span>
+              <span> Electrical Catalog</span>
             </div>
-            <h2 className="text-5xl md:text-8xl font-black text-slate-900 tracking-tighter leading-[0.9]">
+            <h2 className="text-4xl sm:text-5xl md:text-8xl font-black text-slate-900 tracking-tighter leading-[0.9]">
               The Future of <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500">Connected Living</span>
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto text-xl font-medium leading-relaxed">
-              Experience the finest electrical components from global pioneers. 
+            <p className="text-slate-400 max-w-2xl mx-auto text-lg md:text-xl font-medium leading-relaxed px-4">
+              Experience the finest electrical components from global pioneers.
               Uncompromising safety meets architectural elegance.
             </p>
           </motion.section>
 
           {/* Improved Filters Section */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
             className="bg-white rounded-[3.5rem] border border-slate-100 shadow-2xl shadow-slate-200/50 relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50/30 rounded-full blur-[100px] -mr-64 -mt-64" />
-            
-            <div className="p-10 md:p-14 relative z-10 space-y-12">
+
+            <div className="p-6 md:p-14 relative z-10 space-y-8 md:space-y-12">
               {/* <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-slate-50 pb-10">
                 <div className="flex items-center gap-4">
                   <div className="h-14 w-14 bg-slate-900 rounded-[1.5rem] flex items-center justify-center shadow-2xl shadow-slate-400/20">
@@ -124,9 +124,9 @@ function HomeContent() {
                     <button
                       onClick={() => setSelectedCategory(null)}
                       className={cn(
-                        "group flex items-center gap-3 px-6 py-4 rounded-[1.5rem] transition-all duration-300 font-bold",
-                        selectedCategory === null 
-                          ? "bg-slate-900 text-white shadow-xl shadow-slate-400/20 scale-105" 
+                        "group flex items-center gap-2 md:gap-3 px-4 py-3 md:px-6 md:py-4 rounded-full transition-all duration-300 font-bold text-sm md:text-base",
+                        selectedCategory === null
+                          ? "bg-slate-900 text-white shadow-xl shadow-slate-400/20 scale-105"
                           : "bg-slate-50 text-slate-500 hover:bg-slate-100"
                       )}
                     >
@@ -141,9 +141,9 @@ function HomeContent() {
                           key={category}
                           onClick={() => setSelectedCategory(category)}
                           className={cn(
-                            "group flex items-center gap-3 px-6 py-4 rounded-[1.5rem] transition-all duration-300 font-bold border border-transparent",
-                            isActive 
-                              ? "bg-blue-600 text-white shadow-xl shadow-blue-200 scale-105" 
+                            "group flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 rounded-full transition-all duration-300 font-bold border border-transparent text-sm md:text-base",
+                            isActive
+                              ? "bg-blue-600 text-white shadow-xl shadow-blue-200 scale-105"
                               : "bg-white border-slate-100 text-slate-600 shadow-sm hover:border-blue-200 hover:text-blue-600"
                           )}
                         >
@@ -168,9 +168,9 @@ function HomeContent() {
                     <button
                       onClick={() => setSelectedBrand(null)}
                       className={cn(
-                        "group flex items-center gap-3 px-6 py-4 rounded-[1.5rem] transition-all duration-300 font-bold",
-                        selectedBrand === null 
-                          ? "bg-slate-900 text-white shadow-xl shadow-slate-400/20 scale-105" 
+                        "group flex items-center gap-2 md:gap-3 px-4 py-3 md:px-6 md:py-4 rounded-full transition-all duration-300 font-bold text-sm md:text-base",
+                        selectedBrand === null
+                          ? "bg-slate-900 text-white shadow-xl shadow-slate-400/20 scale-105"
                           : "bg-slate-50 text-slate-500 hover:bg-slate-100"
                       )}
                     >
@@ -184,9 +184,9 @@ function HomeContent() {
                           key={brand}
                           onClick={() => setSelectedBrand(brand)}
                           className={cn(
-                            "group flex items-center gap-3 px-6 py-4 rounded-[1.5rem] transition-all duration-300 font-bold border border-transparent",
-                            isActive 
-                              ? "bg-indigo-600 text-white shadow-xl shadow-indigo-200 scale-105" 
+                            "group flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 rounded-full transition-all duration-300 font-bold border border-transparent text-sm md:text-base",
+                            isActive
+                              ? "bg-indigo-600 text-white shadow-xl shadow-indigo-200 scale-105"
                               : "bg-white border-slate-100 text-slate-600 shadow-sm hover:border-indigo-200 hover:text-indigo-600"
                           )}
                         >
@@ -208,14 +208,14 @@ function HomeContent() {
                   <ChevronRight className="h-4 w-4" />
                   <span>Verified Catalog</span>
                 </div>
-                <h3 className="text-4xl font-black text-slate-900 tracking-tight">
-                  {selectedCategory ? `${selectedCategory}` : "Global Showcase"} 
+                <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                  {selectedCategory ? `${selectedCategory}` : "Global Showcase"}
                   {selectedBrand && <span className="text-blue-600 font-medium ml-2">by {selectedBrand}</span>}
                 </h3>
                 <p className="text-slate-400 font-medium">Found {filteredProducts.length} items that match your lifestyle</p>
               </div>
             </div>
-            
+
             <AnimatePresence mode="popLayout">
               <motion.div
                 layout
@@ -231,8 +231,8 @@ function HomeContent() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-100 py-20 mt-20 rounded-t-[4rem] shadow-[0_-20px_50px_rgba(0,0,0,0.03)]">
-        <div className="container mx-auto px-4 text-center space-y-10">
+      <footer className="bg-white border-t border-slate-100 py-12 md:py-20 mt-12 md:mt-20 rounded-t-[3rem] md:rounded-t-[4rem] shadow-[0_-20px_50px_rgba(0,0,0,0.03)]">
+        <div className="container mx-auto px-6 text-center space-y-8 md:space-y-10">
           <div className="flex items-center justify-center gap-4">
             <div className="h-14 w-14 rounded-[1.5rem] bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-2xl shadow-blue-200">
               <span className="text-white font-black text-3xl">G</span>
@@ -248,8 +248,21 @@ function HomeContent() {
               © {new Date().getFullYear()} Grahaak Retail.
             </p>
             <p className="text-slate-400 text-sm max-w-lg mx-auto leading-relaxed">
-              Connecting you with the world's finest electrical innovations. 
+              Connecting you with the world's finest electrical innovations.
               Experience the standard of professional craftsmanship.
+            </p>
+          </div>
+          <div className="pt-8 flex flex-col items-center gap-4">
+            <div className="flex items-center gap-4">
+              <a href="https://github.com/Chirag-varu" target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-all">
+                <Github className="h-5 w-5" />
+              </a>
+              <a href="https://www.linkedin.com/in/chiragvaru03/" target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all">
+                <Linkedin className="h-5 w-5" />
+              </a>
+            </div>
+            <p className="text-sm font-bold text-slate-400">
+              Made with ❤️ by <span className="text-slate-900">Chirag Varu</span>
             </p>
           </div>
         </div>

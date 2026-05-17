@@ -7,7 +7,7 @@ import { Product } from "@/types/product";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MessageCircle, CheckCircle2, ChevronLeft, Sparkles } from "lucide-react";
+import { MessageCircle, CheckCircle2, ChevronLeft, Sparkles, Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ProductPage() {
@@ -176,6 +176,19 @@ export default function ProductPage() {
           <p className="text-slate-500 font-medium">
             © {new Date().getFullYear()} Grahaak Retail.  Quality Guaranteed.
           </p>
+          <div className="pt-4 flex flex-col items-center gap-4">
+            <div className="flex items-center gap-4">
+              <a href="https://github.com/Chirag-varu" target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-all">
+                <Github className="h-5 w-5" />
+              </a>
+              <a href="https://www.linkedin.com/in/chiragvaru03/" target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all">
+                <Linkedin className="h-5 w-5" />
+              </a>
+            </div>
+            <p className="text-sm font-bold text-slate-400">
+              Made with ❤️ by <span className="text-slate-900">Chirag Varu</span>
+            </p>
+          </div>
         </div>
       </footer>
     </main>

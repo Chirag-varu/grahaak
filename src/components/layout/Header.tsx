@@ -37,11 +37,11 @@ export function Header({ onSearch }: HeaderProps) {
       className="fixed left-1/2 -translate-x-1/2 z-50 px-4 transition-all duration-300"
     >
       <nav className={cn(
-        "container mx-auto h-20 bg-white/70 backdrop-blur-3xl border border-white/40 flex items-center justify-between px-6 md:px-10 transition-all duration-500",
+        "container mx-auto h-16 md:h-20 bg-white/70 backdrop-blur-3xl border border-white/40 flex items-center justify-between px-4 md:px-10 transition-all duration-500",
         "rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.08)]",
         isFocused && "border-blue-200 shadow-[0_20px_60px_rgba(59,130,246,0.12)] bg-white/90"
       )}>
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-3 md:gap-8">
           <Link href="/" className="flex items-center gap-3 group">
             <motion.div 
               whileHover={{ rotate: -10, scale: 1.1 }}
@@ -59,7 +59,7 @@ export function Header({ onSearch }: HeaderProps) {
         </div>
 
         {/* Improved Search Bar */}
-        <div className="flex items-center gap-6 flex-1 justify-center max-w-2xl px-4">
+        <div className="flex items-center gap-6 flex-1 justify-center max-w-2xl px-2 md:px-4">
           <div className={cn(
             "relative w-full group transition-all duration-500",
             isFocused ? "scale-105" : "scale-100"
@@ -71,14 +71,14 @@ export function Header({ onSearch }: HeaderProps) {
             
             <div className="relative flex items-center">
               <Search className={cn(
-                "absolute left-5 h-5 w-5 transition-colors duration-300",
+                "absolute left-4 md:left-5 h-4 w-4 md:h-5 md:w-5 transition-colors duration-300",
                 isFocused ? "text-blue-600" : "text-slate-400"
               )} />
               <Input
                 placeholder="Find switches, lighting, MCBs..."
                 className={cn(
-                  "pl-14 pr-14 h-14 bg-slate-100/50 border-none rounded-2xl transition-all duration-300",
-                  "text-base font-medium placeholder:text-slate-400",
+                  "pl-10 pr-4 md:pl-14 md:pr-14 h-10 md:h-14 bg-slate-100/50 border-none rounded-full transition-all duration-300",
+                  "text-sm md:text-base font-medium placeholder:text-slate-400",
                   "focus:bg-white focus:ring-4 focus:ring-blue-500/10 shadow-inner",
                   "hover:bg-slate-200/50"
                 )}

@@ -105,19 +105,19 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-[#fcfdfe] flex flex-col font-sans">
       {/* Admin Nav */}
-      <nav className="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 md:px-12 h-24 flex items-center justify-between sticky top-0 z-50">
-        <div className="flex items-center gap-6">
-          <Link href="/" className="h-12 w-12 flex items-center justify-center bg-slate-50 hover:bg-slate-100 rounded-2xl transition-all active:scale-95">
-            <ArrowLeft className="h-5 w-5 text-slate-500" />
+      <nav className="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-4 md:px-12 h-16 md:h-24 flex items-center justify-between sticky top-0 z-50">
+        <div className="flex items-center gap-3 md:gap-6">
+          <Link href="/" className="h-10 w-10 md:h-12 md:w-12 flex items-center justify-center bg-slate-50 hover:bg-slate-100 rounded-2xl transition-all active:scale-95">
+            <ArrowLeft className="h-4 w-4 md:h-5 md:w-5 text-slate-500" />
           </Link>
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center shadow-lg shadow-slate-200">
-              <span className="text-white font-black text-lg">G</span>
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="h-8 w-8 md:h-10 md:w-10 rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center shadow-lg shadow-slate-200">
+              <span className="text-white font-black text-sm md:text-lg">G</span>
             </div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">Grahaak Admin</h1>
+            <h1 className="text-lg md:text-2xl font-black text-slate-900 tracking-tight">Admin</h1>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           <div className="hidden md:flex flex-col items-end mr-4">
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Active Session</p>
             <p className="text-sm font-black text-slate-900">Administrator</p>
@@ -125,13 +125,13 @@ export default function AdminDashboard() {
           <Button variant="outline" onClick={() => {
             sessionStorage.removeItem("admin_auth");
             router.push("/admin");
-          }} className="rounded-2xl border-slate-200 h-12 px-6 hover:bg-slate-50 transition-all font-bold">
+          }} className="rounded-2xl border-slate-200 h-10 px-4 md:h-12 md:px-6 hover:bg-slate-50 transition-all font-bold text-sm">
             Logout
           </Button>
         </div>
       </nav>
 
-      <div className="container mx-auto px-6 md:px-12 py-12 flex-1 max-w-7xl">
+      <div className="container mx-auto px-4 md:px-12 py-8 md:py-12 flex-1 max-w-7xl">
         <Tabs defaultValue="list" className="space-y-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <TabsList className="bg-white p-2 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/40 h-16">
@@ -169,18 +169,18 @@ export default function AdminDashboard() {
                 exit={{ opacity: 0, y: -20 }}
               >
                 <Card className="border-none shadow-2xl shadow-slate-200/50 rounded-[3rem] overflow-hidden bg-white">
-                  <CardHeader className="bg-white border-b border-slate-50 p-10">
+                  <CardHeader className="bg-white border-b border-slate-50 p-6 md:p-10">
                     <div className="flex justify-between items-center">
                       <div className="space-y-1">
-                        <CardTitle className="text-3xl font-black text-slate-900 tracking-tight">Product Inventory</CardTitle>
-                        <CardDescription className="text-lg font-medium text-slate-400">Manage your catalog, edit details, or remove items.</CardDescription>
+                        <CardTitle className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">Product Inventory</CardTitle>
+                        <CardDescription className="text-sm md:text-lg font-medium text-slate-400">Manage your catalog, edit details, or remove items.</CardDescription>
                       </div>
-                      <div className="h-12 w-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400">
+                      <div className="hidden md:flex h-12 w-12 bg-slate-50 rounded-2xl items-center justify-center text-slate-400">
                         <ListFilter className="h-6 w-6" />
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="p-0">
+                  <CardContent className="p-0 overflow-x-auto">
                     <Table>
                       <TableHeader className="bg-slate-50/30 h-20">
                         <TableRow className="border-none">
@@ -268,11 +268,11 @@ export default function AdminDashboard() {
                 exit={{ opacity: 0, y: -20 }}
               >
                 <Card className="border-none shadow-2xl shadow-slate-200/50 rounded-[3rem] overflow-hidden bg-white">
-                  <CardHeader className={`${editingProduct ? 'bg-gradient-to-r from-blue-600 to-indigo-600' : 'bg-slate-900'} text-white p-10 md:p-14 transition-colors relative`}>
+                  <CardHeader className={`${editingProduct ? 'bg-gradient-to-r from-blue-600 to-indigo-600' : 'bg-slate-900'} text-white p-8 md:p-14 transition-colors relative`}>
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32" />
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative z-10">
                       <div className="space-y-2">
-                        <CardTitle className="text-3xl md:text-4xl font-black flex items-center gap-4 tracking-tight">
+                        <CardTitle className="text-2xl md:text-4xl font-black flex items-center gap-4 tracking-tight">
                           {editingProduct ? <Pencil className="h-10 w-10 p-2 bg-white/20 rounded-2xl" /> : <PlusCircle className="h-10 w-10 p-2 bg-white/20 rounded-2xl" />}
                           {editingProduct ? `Modify: ${editingProduct.name}` : "Create New Item"}
                         </CardTitle>
