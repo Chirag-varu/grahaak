@@ -91,7 +91,7 @@ function HomeContent() {
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50/30 rounded-full blur-[100px] -mr-64 -mt-64" />
             
             <div className="p-10 md:p-14 relative z-10 space-y-12">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-slate-50 pb-10">
+              {/* <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-slate-50 pb-10">
                 <div className="flex items-center gap-4">
                   <div className="h-14 w-14 bg-slate-900 rounded-[1.5rem] flex items-center justify-center shadow-2xl shadow-slate-400/20">
                     <Filter className="h-6 w-6 text-white" />
@@ -111,7 +111,7 @@ function HomeContent() {
                     <X className="h-4 w-4" /> Clear All Filters
                   </Button>
                 )}
-              </div>
+              </div> */}
 
               <div className="grid lg:grid-cols-12 gap-12">
                 {/* Category Selection */}
