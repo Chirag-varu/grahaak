@@ -16,7 +16,6 @@ import { brands, categories, products as initialProducts } from "@/data/products
 import { Product } from "@/types/product";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  LayoutDashboard,
   PlusCircle,
   Package,
   ArrowLeft,
@@ -27,7 +26,6 @@ import {
   Trash2,
   ListFilter,
   Eye,
-  Settings,
   Sparkles
 } from "lucide-react";
 import Link from "next/link";
@@ -44,11 +42,14 @@ export default function AdminDashboard() {
     if (auth !== "true") {
       router.push("/admin");
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsAuthorized(true);
       const saved = localStorage.getItem("app_products");
       if (saved) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setProducts(JSON.parse(saved));
       } else {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setProducts(initialProducts);
       }
     }
@@ -196,6 +197,7 @@ export default function AdminDashboard() {
                           <TableRow key={product.id || `product-${index}`} className="hover:bg-slate-50/50 transition-colors h-24 border-slate-50">
                             <TableCell className="px-10">
                               <div className="h-16 w-16 rounded-[1.25rem] bg-slate-50 overflow-hidden border border-slate-100 flex items-center justify-center p-2 group-hover:scale-105 transition-transform">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src={product.image} alt="" className="object-contain h-full w-full" />
                               </div>
                             </TableCell>

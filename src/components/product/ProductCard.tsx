@@ -22,7 +22,8 @@ export function ProductCard({ product }: ProductCardProps) {
           className="overflow-hidden cursor-pointer hover:shadow-2xl transition-all duration-500 border-none bg-white rounded-[2rem] h-full shadow-lg shadow-slate-200/50 group"
         >
           <div className="aspect-square relative overflow-hidden bg-slate-50">
-            <img
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
               src={product.image}
               alt={product.name}
               className="object-contain p-6 w-full h-full group-hover:scale-110 transition-transform duration-700 ease-out"

@@ -7,7 +7,7 @@ import { Product } from "@/types/product";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MessageCircle, CheckCircle2, ChevronLeft, Sparkles, Github, Linkedin } from "lucide-react";
+import { MessageCircle, CheckCircle2, ChevronLeft, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ProductPage() {
@@ -20,6 +20,7 @@ export default function ProductPage() {
   useEffect(() => {
     const saved = localStorage.getItem("app_products");
     if (saved) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setProducts(JSON.parse(saved));
     }
   }, []);
@@ -79,6 +80,7 @@ export default function ProductPage() {
 
           <div className="grid lg:grid-cols-2 relative z-10">
             <div className="aspect-square bg-slate-50/50 relative p-12 md:p-20 flex items-center justify-center border-r border-slate-50">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <motion.img
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -179,10 +181,10 @@ export default function ProductPage() {
           <div className="pt-4 flex flex-col items-center gap-4">
             <div className="flex items-center gap-4">
               <a href="https://github.com/Chirag-varu" target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-all">
-                <Github className="h-5 w-5" />
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-6.5a5.4 5.4 0 0 0-1.5-3.8 5.4 5.4 0 0 0-.1-3.8s-1.2-.4-3.9 1.4a13.3 13.3 0 0 0-7 0C6.2 1.6 5 2 5 2a5.4 5.4 0 0 0-.1 3.8A5.4 5.4 0 0 0 3.5 9.6c0 5 3 6.2 6 6.5a4.8 4.8 0 0 0-1 3.2v4"></path></svg>
               </a>
               <a href="https://www.linkedin.com/in/chiragvaru03/" target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all">
-                <Linkedin className="h-5 w-5" />
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
               </a>
             </div>
             <p className="text-sm font-bold text-slate-400">
