@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { brands, categories, products as initialProducts } from "@/data/products";
+import { brands as initialBrands, categories as initialCategories, products as initialProducts } from "@/data/products";
 import { Product } from "@/types/product";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -26,7 +26,9 @@ import {
   Trash2,
   ListFilter,
   Eye,
-  Sparkles
+  Sparkles,
+  Tag,
+  Award
 } from "lucide-react";
 import Link from "next/link";
 
@@ -34,6 +36,8 @@ export default function AdminDashboard() {
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [brands, setBrands] = useState<string[]>([]);
   const [success, setSuccess] = useState<string | null>(null);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
@@ -42,15 +46,29 @@ export default function AdminDashboard() {
     if (auth !== "true") {
       router.push("/admin");
     } else {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsAuthorized(true);
-      const saved = localStorage.getItem("app_products");
-      if (saved) {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setProducts(JSON.parse(saved));
+      
+      const savedProducts = localStorage.getItem("app_products");
+      if (savedProducts) {
+        setProducts(JSON.parse(savedProducts));
       } else {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setProducts(initialProducts);
+      }
+
+      const savedCategories = localStorage.getItem("app_categories");
+      if (savedCategories) {
+        setCategories(JSON.parse(savedCategories));
+      } else {
+        setCategories(initialCategories);
+        localStorage.setItem("app_categories", JSON.stringify(initialCategories));
+      }
+
+      const savedBrands = localStorage.getItem("app_brands");
+      if (savedBrands) {
+        setBrands(JSON.parse(savedBrands));
+      } else {
+        setBrands(initialBrands);
+        localStorage.setItem("app_brands", JSON.stringify(initialBrands));
       }
     }
   }, [router]);
@@ -63,6 +81,8 @@ export default function AdminDashboard() {
   const handleAddOrUpdate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    const priceRaw = formData.get("price") as string;
+    const price = priceRaw ? parseFloat(priceRaw) : undefined;
 
     const productData: Product = {
       id: (formData.get("id") as string) || (editingProduct?.id as string),
@@ -72,6 +92,7 @@ export default function AdminDashboard() {
       description: formData.get("description") as string,
       image: formData.get("image") as string,
       specs: (formData.get("specs") as string).split(",").map(s => s.trim()),
+      price,
     };
 
     if (editingProduct) {
@@ -135,14 +156,22 @@ export default function AdminDashboard() {
       <div className="container mx-auto px-4 md:px-12 py-8 md:py-12 flex-1 max-w-7xl">
         <Tabs defaultValue="list" className="space-y-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <TabsList className="bg-white p-2 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/40 h-16">
-              <TabsTrigger value="list" className="rounded-[1.5rem] px-8 data-[state=active]:bg-slate-900 data-[state=active]:text-white h-full transition-all">
+            <TabsList className="bg-white p-2 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/40 h-auto md:h-16 flex flex-wrap md:flex-nowrap gap-1 md:gap-0">
+              <TabsTrigger value="list" className="rounded-[1.5rem] px-8 data-[state=active]:bg-slate-900 data-[state=active]:text-white h-12 md:h-full transition-all">
                 <Package className="h-4 w-4 mr-2" />
                 Inventory
               </TabsTrigger>
-              <TabsTrigger value="form" className="rounded-[1.5rem] px-8 data-[state=active]:bg-slate-900 data-[state=active]:text-white h-full transition-all">
+              <TabsTrigger value="form" className="rounded-[1.5rem] px-8 data-[state=active]:bg-slate-900 data-[state=active]:text-white h-12 md:h-full transition-all">
                 <PlusCircle className="h-4 w-4 mr-2" />
                 {editingProduct ? "Edit Item" : "New Item"}
+              </TabsTrigger>
+              <TabsTrigger value="categories" className="rounded-[1.5rem] px-8 data-[state=active]:bg-slate-900 data-[state=active]:text-white h-12 md:h-full transition-all">
+                <Tag className="h-4 w-4 mr-2" />
+                Categories
+              </TabsTrigger>
+              <TabsTrigger value="brands" className="rounded-[1.5rem] px-8 data-[state=active]:bg-slate-900 data-[state=active]:text-white h-12 md:h-full transition-all">
+                <Award className="h-4 w-4 mr-2" />
+                Brands
               </TabsTrigger>
             </TabsList>
 
@@ -189,6 +218,7 @@ export default function AdminDashboard() {
                           <TableHead className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Product Info</TableHead>
                           <TableHead className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Brand</TableHead>
                           <TableHead className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Category</TableHead>
+                          <TableHead className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Price</TableHead>
                           <TableHead className="text-right px-10 text-slate-400 font-bold uppercase tracking-widest text-[10px]">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -215,6 +245,11 @@ export default function AdminDashboard() {
                             <TableCell>
                               <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">{product.category}</span>
                             </TableCell>
+                            <TableCell>
+                              <span className="text-sm font-bold text-slate-900">
+                                {product.price !== undefined ? `₹${product.price.toLocaleString('en-IN')}` : "Contact"}
+                              </span>
+                            </TableCell>
                             <TableCell className="text-right px-10">
                               <DropdownMenu>
                                 <DropdownMenuTrigger className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-12 w-12 rounded-[1.25rem] bg-slate-50 hover:bg-slate-100 transition-all")}>
@@ -233,7 +268,6 @@ export default function AdminDashboard() {
                                   <DropdownMenuItem
                                     onClick={() => {
                                       setEditingProduct(product);
-                                      // Note: In real app use state for tabs, here we just show how to populate
                                     }}
                                     className="gap-3 cursor-pointer h-12 rounded-xl focus:bg-slate-50"
                                   >
@@ -307,26 +341,26 @@ export default function AdminDashboard() {
                       <div className="grid md:grid-cols-2 gap-10">
                         <div className="space-y-3">
                           <label className="text-sm font-black text-slate-900 uppercase tracking-widest ml-1">Manufacturer (Brand)</label>
-                          <Select name="brand" defaultValue={editingProduct?.brand.toLowerCase()}>
+                          <Select name="brand" defaultValue={editingProduct?.brand}>
                             <SelectTrigger className="rounded-2xl h-14 border-slate-100 bg-slate-50/50 focus:bg-white transition-all text-lg px-6 font-medium">
                               <SelectValue placeholder="Select Brand" />
                             </SelectTrigger>
                             <SelectContent className="rounded-2xl shadow-2xl border-slate-100 p-2">
                               {brands.map(brand => (
-                                <SelectItem key={brand} value={brand.toLowerCase()} className="rounded-xl h-10">{brand}</SelectItem>
+                                <SelectItem key={brand} value={brand} className="rounded-xl h-10">{brand}</SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
                         </div>
                         <div className="space-y-3">
                           <label className="text-sm font-black text-slate-900 uppercase tracking-widest ml-1">Product Category</label>
-                          <Select name="category" defaultValue={editingProduct?.category.toLowerCase()}>
+                          <Select name="category" defaultValue={editingProduct?.category}>
                             <SelectTrigger className="rounded-2xl h-14 border-slate-100 bg-slate-50/50 focus:bg-white transition-all text-lg px-6 font-medium">
                               <SelectValue placeholder="Select Category" />
                             </SelectTrigger>
                             <SelectContent className="rounded-2xl shadow-2xl border-slate-100 p-2">
                               {categories.map(cat => (
-                                <SelectItem key={cat} value={cat.toLowerCase()} className="rounded-xl h-10">{cat}</SelectItem>
+                                <SelectItem key={cat} value={cat} className="rounded-xl h-10">{cat}</SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
@@ -343,11 +377,17 @@ export default function AdminDashboard() {
                         <Input name="specs" defaultValue={editingProduct?.specs.join(", ")} placeholder="6A, 240V, Glossy Finish, 10-Year Warranty..." className="rounded-2xl h-14 border-slate-100 bg-slate-50/50 focus:bg-white transition-all text-lg px-6 font-medium" required />
                       </div>
 
-                      <div className="space-y-3">
-                        <label className="text-sm font-black text-slate-900 uppercase tracking-widest ml-1">Visual Asset URL</label>
-                        <div className="relative">
-                          <Input name="image" defaultValue={editingProduct?.image} placeholder="https://..." className="rounded-2xl h-14 pl-14 border-slate-100 bg-slate-50/50 focus:bg-white transition-all text-lg px-6 font-medium" required />
-                          <UploadCloud className="absolute left-5 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-400" />
+                      <div className="grid md:grid-cols-2 gap-10">
+                        <div className="space-y-3">
+                          <label className="text-sm font-black text-slate-900 uppercase tracking-widest ml-1">Price (₹) <span className="text-[10px] text-slate-400">(Optional)</span></label>
+                          <Input name="price" type="number" step="any" defaultValue={editingProduct?.price} placeholder="e.g. 250 (leave empty for contact for pricing)" className="rounded-2xl h-14 border-slate-100 bg-slate-50/50 focus:bg-white transition-all text-lg font-medium px-6" />
+                        </div>
+                        <div className="space-y-3">
+                          <label className="text-sm font-black text-slate-900 uppercase tracking-widest ml-1">Visual Asset URL</label>
+                          <div className="relative">
+                            <Input name="image" defaultValue={editingProduct?.image} placeholder="https://..." className="rounded-2xl h-14 pl-14 border-slate-100 bg-slate-50/50 focus:bg-white transition-all text-lg px-6 font-medium" required />
+                            <UploadCloud className="absolute left-5 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-400" />
+                          </div>
                         </div>
                       </div>
 
@@ -361,6 +401,140 @@ export default function AdminDashboard() {
                         </Button>
                       </div>
                     </form>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="categories" className="mt-0">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <Card className="border-none shadow-2xl shadow-slate-200/50 rounded-[3rem] overflow-hidden bg-white">
+                  <CardHeader className="bg-slate-900 text-white p-8 md:p-14 relative">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32" />
+                    <CardTitle className="text-2xl md:text-4xl font-black tracking-tight">Manage Categories</CardTitle>
+                    <CardDescription className="text-white/60 text-lg font-medium">Add or remove product categories.</CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-10 md:p-14 space-y-8">
+                    <form onSubmit={(e) => {
+                      e.preventDefault();
+                      const form = e.currentTarget;
+                      const name = (new FormData(form).get("newCategory") as string).trim();
+                      if (!name) return;
+                      if (categories.some(c => c.toLowerCase() === name.toLowerCase())) {
+                        alert("Category already exists!");
+                        return;
+                      }
+                      const updated = [...categories, name];
+                      setCategories(updated);
+                      localStorage.setItem("app_categories", JSON.stringify(updated));
+                      setSuccess("Category added successfully!");
+                      setTimeout(() => setSuccess(null), 3000);
+                      form.reset();
+                    }} className="flex gap-4">
+                      <Input name="newCategory" placeholder="New Category Name (e.g. Smart Devices)" className="rounded-2xl h-14 border-slate-100 bg-slate-50/50 focus:bg-white transition-all text-lg font-medium px-6 flex-1" required />
+                      <Button type="submit" className="h-14 bg-slate-900 hover:bg-black text-white px-8 rounded-2xl font-bold">Add Category</Button>
+                    </form>
+                    <div className="border border-slate-100 rounded-3xl overflow-hidden">
+                      <Table>
+                        <TableHeader className="bg-slate-50/50 h-16">
+                          <TableRow className="border-none">
+                            <TableHead className="px-8 text-slate-400 font-bold uppercase tracking-widest text-[10px]">Category Name</TableHead>
+                            <TableHead className="text-right px-8 text-slate-400 font-bold uppercase tracking-widest text-[10px]">Actions</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {categories.map((cat, i) => (
+                            <TableRow key={i} className="hover:bg-slate-50/50 h-16 border-slate-50">
+                              <TableCell className="px-8 font-bold text-slate-800 text-lg">{cat}</TableCell>
+                              <TableCell className="text-right px-8">
+                                <Button variant="ghost" className="h-10 w-10 p-0 rounded-xl hover:bg-red-50 hover:text-red-600 transition-colors" onClick={() => {
+                                  if (confirm(`Are you sure you want to delete category "${cat}"?`)) {
+                                    const updated = categories.filter(c => c !== cat);
+                                    setCategories(updated);
+                                    localStorage.setItem("app_categories", JSON.stringify(updated));
+                                    setSuccess("Category deleted successfully!");
+                                    setTimeout(() => setSuccess(null), 3000);
+                                  }
+                                }}>
+                                  <Trash2 className="h-5 w-5" />
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="brands" className="mt-0">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <Card className="border-none shadow-2xl shadow-slate-200/50 rounded-[3rem] overflow-hidden bg-white">
+                  <CardHeader className="bg-slate-900 text-white p-8 md:p-14 relative">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-32 -mt-32" />
+                    <CardTitle className="text-2xl md:text-4xl font-black tracking-tight">Manage Brands</CardTitle>
+                    <CardDescription className="text-white/60 text-lg font-medium">Add or remove manufacturing brands.</CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-10 md:p-14 space-y-8">
+                    <form onSubmit={(e) => {
+                      e.preventDefault();
+                      const form = e.currentTarget;
+                      const name = (new FormData(form).get("newBrand") as string).trim();
+                      if (!name) return;
+                      if (brands.some(b => b.toLowerCase() === name.toLowerCase())) {
+                        alert("Brand already exists!");
+                        return;
+                      }
+                      const updated = [...brands, name];
+                      setBrands(updated);
+                      localStorage.setItem("app_brands", JSON.stringify(updated));
+                      setSuccess("Brand added successfully!");
+                      setTimeout(() => setSuccess(null), 3000);
+                      form.reset();
+                    }} className="flex gap-4">
+                      <Input name="newBrand" placeholder="New Brand Name (e.g. Panasonic)" className="rounded-2xl h-14 border-slate-100 bg-slate-50/50 focus:bg-white transition-all text-lg font-medium px-6 flex-1" required />
+                      <Button type="submit" className="h-14 bg-slate-900 hover:bg-black text-white px-8 rounded-2xl font-bold">Add Brand</Button>
+                    </form>
+                    <div className="border border-slate-100 rounded-3xl overflow-hidden">
+                      <Table>
+                        <TableHeader className="bg-slate-50/50 h-16">
+                          <TableRow className="border-none">
+                            <TableHead className="px-8 text-slate-400 font-bold uppercase tracking-widest text-[10px]">Brand Name</TableHead>
+                            <TableHead className="text-right px-8 text-slate-400 font-bold uppercase tracking-widest text-[10px]">Actions</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {brands.map((brand, i) => (
+                            <TableRow key={i} className="hover:bg-slate-50/50 h-16 border-slate-50">
+                              <TableCell className="px-8 font-bold text-slate-800 text-lg">{brand}</TableCell>
+                              <TableCell className="text-right px-8">
+                                <Button variant="ghost" className="h-10 w-10 p-0 rounded-xl hover:bg-red-50 hover:text-red-600 transition-colors" onClick={() => {
+                                  if (confirm(`Are you sure you want to delete brand "${brand}"?`)) {
+                                    const updated = brands.filter(b => b !== brand);
+                                    setBrands(updated);
+                                    localStorage.setItem("app_brands", JSON.stringify(updated));
+                                    setSuccess("Brand deleted successfully!");
+                                    setTimeout(() => setSuccess(null), 3000);
+                                  }
+                                }}>
+                                  <Trash2 className="h-5 w-5" />
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -393,3 +567,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+

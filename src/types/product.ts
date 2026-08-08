@@ -6,4 +6,5 @@ export interface Product {
   description: string;
   specs: string[];
   image: string;
+  price?: number;
 }

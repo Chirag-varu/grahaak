@@ -46,8 +46,9 @@ export default function ProductPage() {
 
   const handleContact = () => {
     const phoneNumber = "+919004047858";
+    const priceText = product.price !== undefined ? ` priced at ₹${product.price.toLocaleString('en-IN')}` : "";
     const message = encodeURIComponent(
-      `Hello! I'm interested in the product: ${product.name} (ID: ${product.id}). Could you please share the price and availability?`
+      `Hello! I'm interested in the product: ${product.name} (ID: ${product.id})${priceText}. Could you please confirm its availability?`
     );
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
   };
@@ -109,7 +110,15 @@ export default function ProductPage() {
                   <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight capitalize">
                     {product.name}
                   </h1>
-                  <p className="text-sm font-mono font-black text-slate-300 tracking-widest">ID: {product.id}</p>
+                  <div className="flex flex-col gap-2">
+                    <p className="text-sm font-mono font-black text-slate-300 tracking-widest">ID: {product.id}</p>
+                    {product.price !== undefined && (
+                      <div className="mt-2 flex items-baseline gap-2 bg-slate-50/50 w-fit px-4 py-2 rounded-2xl border border-slate-100/50">
+                        <span className="text-3xl md:text-4xl font-black text-slate-900">₹{product.price.toLocaleString('en-IN')}</span>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">M.R.P.</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="space-y-10">
@@ -152,7 +161,7 @@ export default function ProductPage() {
                     className="w-full md:w-auto px-12 bg-green-600 hover:bg-green-700 text-white font-black h-20 rounded-[2rem] gap-4 text-xl shadow-2xl shadow-green-200 transition-all flex items-center justify-center"
                   >
                     <MessageCircle className="h-8 w-8" />
-                    Contact for Pricing
+                    {product.price !== undefined ? "Buy / Inquire via WhatsApp" : "Contact for Pricing"}
                   </Button>
                 </motion.div>
                 <div className="text-sm text-slate-400 mt-6 font-medium italic flex items-center gap-2">

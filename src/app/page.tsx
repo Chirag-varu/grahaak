@@ -28,12 +28,27 @@ function HomeContent() {
   const { query, setQuery, results } = useProductSearch(products);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+  const [categoriesList, setCategoriesList] = useState<string[]>([]);
+  const [brandsList, setBrandsList] = useState<string[]>([]);
 
   useEffect(() => {
     const saved = localStorage.getItem("app_products");
     if (saved) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setProducts(JSON.parse(saved));
+    }
+
+    const savedCategories = localStorage.getItem("app_categories");
+    if (savedCategories) {
+      setCategoriesList(JSON.parse(savedCategories));
+    } else {
+      setCategoriesList(categories);
+    }
+
+    const savedBrands = localStorage.getItem("app_brands");
+    if (savedBrands) {
+      setBrandsList(JSON.parse(savedBrands));
+    } else {
+      setBrandsList(brands);
     }
   }, []);
 
@@ -129,7 +144,7 @@ function HomeContent() {
                       <LayoutGrid className="h-5 w-5" />
                       <span>All Products</span>
                     </button>
-                    {categories.filter(Boolean).map((category) => {
+                    {categoriesList.filter(Boolean).map((category) => {
                       const Icon = categoryIcons[category] || Zap;
                       const isActive = selectedCategory === category;
                       return (
@@ -173,7 +188,7 @@ function HomeContent() {
                       <Building2 className="h-5 w-5" />
                       <span>All Brands</span>
                     </button>
-                    {brands.filter(Boolean).map((brand) => {
+                    {brandsList.filter(Boolean).map((brand) => {
                       const isActive = selectedBrand === brand;
                       return (
                         <button

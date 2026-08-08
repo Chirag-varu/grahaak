@@ -53,7 +53,12 @@ export function ProductCard({ product }: ProductCardProps) {
           <CardFooter className="p-6 pt-2 flex flex-col gap-4 mt-auto">
             <div className="w-full h-px bg-slate-50" />
             <div className="flex items-center justify-between w-full">
-              <p className="text-[10px] font-mono text-slate-300">#{product.id}</p>
+              <div className="flex flex-col">
+                <p className="text-[10px] font-mono text-slate-300">#{product.id}</p>
+                {product.price !== undefined && (
+                  <p className="text-slate-900 font-extrabold text-base mt-1">₹{product.price.toLocaleString('en-IN')}</p>
+                )}
+              </div>
               <span className="text-blue-600 text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all">
                 Details
                 <span className="text-lg">→</span>
