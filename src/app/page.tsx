@@ -83,7 +83,7 @@ function HomeContent() {
               <span> Electrical Catalog</span>
             </div>
             <h2 className="text-4xl sm:text-5xl md:text-8xl font-black text-slate-900 tracking-tighter leading-[0.9]">
-              The Rolex Electric Store <br />
+              The Rolex Electric And Hardware <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500">Gundavali, Andheri (E) - 400069</span>
             </h2>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2 px-4">
