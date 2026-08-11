@@ -7,7 +7,7 @@ import { Product } from "@/types/product";
 import { Header } from "@/components/layout/Header";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { useProductSearch } from "@/hooks/useProductSearch";
-import { LayoutGrid, Building2, Sparkles, ChevronRight, Zap, Lightbulb, Wind, ShieldCheck, Cable } from "lucide-react";
+import { LayoutGrid, Building2, Sparkles, ChevronRight, Zap, Lightbulb, Wind, ShieldCheck, Cable, Phone, Mail, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -86,10 +86,36 @@ function HomeContent() {
               The Rolex Electric Store <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500">Gundavali, Andheri (E) - 400069</span>
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto text-lg md:text-xl font-medium leading-relaxed px-4">
-              contact: 7977048743,
-              email: rolexelectrichardware@gmail.com
-            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2 px-4">
+              {/* Phone / WhatsApp */}
+              <a
+                href="tel:+917977048743"
+                className="group flex items-center gap-3 bg-white border border-slate-100 shadow-lg shadow-slate-200/60 hover:shadow-xl hover:shadow-blue-100/60 rounded-2xl px-6 py-4 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 min-w-[220px]"
+              >
+                <span className="flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 shadow-md shadow-emerald-200 group-hover:scale-110 transition-transform duration-300">
+                  <MessageCircle className="h-5 w-5 text-white" />
+                </span>
+                <div className="text-left">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">WhatsApp / Call</p>
+                  <p className="text-slate-800 font-black text-base tracking-tight">+91 7977048743</p>
+                </div>
+              </a>
+
+              {/* Email */}
+              <a
+                href="mailto:rolexelectrichardware@gmail.com"
+                className="group flex items-center gap-3 bg-white border border-slate-100 shadow-lg shadow-slate-200/60 hover:shadow-xl hover:shadow-blue-100/60 rounded-2xl px-6 py-4 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 min-w-[220px]"
+              >
+                <span className="flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md shadow-blue-200 group-hover:scale-110 transition-transform duration-300">
+                  <Mail className="h-5 w-5 text-white" />
+                </span>
+                <div className="text-left">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Email Us</p>
+                  <p className="text-slate-800 font-black text-sm tracking-tight">rolexelectrichardware</p>
+                  <p className="text-slate-400 font-medium text-xs">@gmail.com</p>
+                </div>
+              </a>
+            </div>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg md:text-xl font-medium leading-relaxed px-4">
               Experience the finest electrical components from global pioneers.
               Uncompromising safety meets architectural elegance.
