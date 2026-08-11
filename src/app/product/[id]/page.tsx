@@ -45,7 +45,7 @@ export default function ProductPage() {
   }
 
   const handleContact = () => {
-    const phoneNumber = "+919004047858";
+    const phoneNumber = "+917977048743";
     const priceText = product.price !== undefined ? ` priced at ₹${product.price.toLocaleString('en-IN')}` : "";
     const message = encodeURIComponent(
       `Hello! I'm interested in the product: ${product.name} (ID: ${product.id})${priceText}. Could you please confirm its availability?`

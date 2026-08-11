@@ -83,9 +83,13 @@ function HomeContent() {
               <span> Electrical Catalog</span>
             </div>
             <h2 className="text-4xl sm:text-5xl md:text-8xl font-black text-slate-900 tracking-tighter leading-[0.9]">
-              The Future of <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500">Connected Living</span>
+              The Rolex Electric Store <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500">Gundavali, Andheri (E) - 400069</span>
             </h2>
+            <p className="text-slate-400 max-w-2xl mx-auto text-lg md:text-xl font-medium leading-relaxed px-4">
+              contact: 7977048743,
+              email: rolexelectrichardware@gmail.com
+            </p>
             <p className="text-slate-400 max-w-2xl mx-auto text-lg md:text-xl font-medium leading-relaxed px-4">
               Experience the finest electrical components from global pioneers.
               Uncompromising safety meets architectural elegance.
